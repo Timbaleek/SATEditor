@@ -28,20 +28,27 @@ public class World {
 		}
 	}
 	
-	public void createNewPolygon(){
-		Vector2f mousePos = Camera.single.getAbsoluteMouse();
-		polygons.add(new Polygon(mousePos,new ArrayList<Vector2f>()));
-	}
-	
 	public void changeActivePolygon(){
 		polygons.get(Main.activeColliderIndex).isActive = false;
 		Main.activeColliderIndex = (Main.activeColliderIndex + 1) % polygons.size();
 		polygons.get(Main.activeColliderIndex).isActive = true;
 	}
 	
+	public void changeActivePolygonToLast(){
+		polygons.get(Main.activeColliderIndex).isActive = false;
+		Main.activeColliderIndex = polygons.size() -1;
+		polygons.get(Main.activeColliderIndex).isActive = true;
+	}
+	
 	public void changeActiveRect(){
 		graphicRects.get(Main.activeColliderIndex).isActive = false;
 		Main.activeColliderIndex = (Main.activeColliderIndex + 1) % graphicRects.size();
+		graphicRects.get(Main.activeColliderIndex).isActive = true;
+	}
+	
+	public void changeActiveRectToLast(){
+		graphicRects.get(Main.activeColliderIndex).isActive = false;
+		Main.activeColliderIndex = graphicRects.size() -1;
 		graphicRects.get(Main.activeColliderIndex).isActive = true;
 	}
 	
@@ -52,6 +59,16 @@ public class World {
 		for(int i = 0; i < graphicRects.size(); i++){
 			graphicRects.get(i).saveGraphicRect(path + "/worlds/world" + worldNumber + "/rects/" , i);
 		}
+	}
+
+	public void createNewPolygon(){
+		Vector2f mousePos = Camera.single.getAbsoluteMouse();
+		polygons.add(new Polygon(mousePos,new ArrayList<Vector2f>()));
+	}
+	
+	public void createNewGraphicRect() {
+		Vector2f mousePos = Camera.single.getAbsoluteMouse();
+		graphicRects.add(new GraphicRect(mousePos,new Vector2f(50,50),"noTex"));
 	}
 
 }

@@ -124,6 +124,7 @@ public class Main {
 				if(Keyboard.getEventKey() == Keyboard.KEY_N){
 					if(Keyboard.getEventKeyState()){
 						currentWorld.createNewPolygon();
+						currentWorld.changeActivePolygonToLast();
 					}
 				}else if(Keyboard.getEventKey() == Keyboard.KEY_TAB){
 					if(Keyboard.getEventKeyState()){
@@ -131,7 +132,12 @@ public class Main {
 					}
 				}
 			} else {
-				if(Keyboard.getEventKey() == Keyboard.KEY_TAB){
+				if(Keyboard.getEventKey() == Keyboard.KEY_N){
+					if(Keyboard.getEventKeyState()){
+						currentWorld.createNewGraphicRect();
+						currentWorld.changeActiveRectToLast();
+					}
+				}else if(Keyboard.getEventKey() == Keyboard.KEY_TAB){
 					if(Keyboard.getEventKeyState()){
 						currentWorld.changeActiveRect();
 					}
