@@ -11,18 +11,18 @@ import main.World;
 
 public class WorldLoader {
 	
-	static public World loadWorld(int worldNumber){
+	static public World loadWorld(String path, int worldNumber){
 		List<Polygon> polygons = new ArrayList<Polygon>();
 		List<GraphicRect> graphicRects = new ArrayList<GraphicRect>();
 		
-		String dirPath = "res/worlds/world" + worldNumber + "/polygons/";
+		String dirPath = path + worldNumber + "/polygons/";
 		String[] pFiles = new File(dirPath).list();
 		if(pFiles != null){
 			for(String file:pFiles){
 				polygons.add(PolygonLoader.load(dirPath+file));
 			}
 		}
-		dirPath = "res/worlds/world" + worldNumber + "/rects/";
+		dirPath = path + worldNumber + "/rects/";
 		String[] rFiles = new File(dirPath).list();
 		if(rFiles != null){
 			for(String file:rFiles){

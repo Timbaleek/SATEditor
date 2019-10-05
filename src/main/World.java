@@ -30,23 +30,27 @@ public class World {
 	
 	public void changeActivePolygon(){
 		polygons.get(Main.activeColliderIndex).isActive = false;
+		graphicRects.get(Main.activeColliderIndex).isActive = false;
 		Main.activeColliderIndex = (Main.activeColliderIndex + 1) % polygons.size();
 		polygons.get(Main.activeColliderIndex).isActive = true;
 	}
 	
 	public void changeActivePolygonToLast(){
 		polygons.get(Main.activeColliderIndex).isActive = false;
+		graphicRects.get(Main.activeColliderIndex).isActive = false;
 		Main.activeColliderIndex = polygons.size() -1;
 		polygons.get(Main.activeColliderIndex).isActive = true;
 	}
 	
 	public void changeActiveRect(){
+		polygons.get(Main.activeColliderIndex).isActive = false;
 		graphicRects.get(Main.activeColliderIndex).isActive = false;
 		Main.activeColliderIndex = (Main.activeColliderIndex + 1) % graphicRects.size();
 		graphicRects.get(Main.activeColliderIndex).isActive = true;
 	}
 	
 	public void changeActiveRectToLast(){
+		polygons.get(Main.activeColliderIndex).isActive = false;
 		graphicRects.get(Main.activeColliderIndex).isActive = false;
 		Main.activeColliderIndex = graphicRects.size() -1;
 		graphicRects.get(Main.activeColliderIndex).isActive = true;
@@ -54,10 +58,10 @@ public class World {
 	
 	public void saveWorld(String path, int worldNumber){
 		for(int i = 0; i < polygons.size(); i++){
-			polygons.get(i).savePolygon(path + "/worlds/world" + worldNumber + "/polygons/" , i);
+			polygons.get(i).savePolygon(path + worldNumber + "/polygons/" , i);
 		}
 		for(int i = 0; i < graphicRects.size(); i++){
-			graphicRects.get(i).saveGraphicRect(path + "/worlds/world" + worldNumber + "/rects/" , i);
+			graphicRects.get(i).saveGraphicRect(path + worldNumber + "/rects/" , i);
 		}
 	}
 

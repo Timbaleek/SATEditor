@@ -16,20 +16,15 @@ public class CollisionHandler {
 	public static Vector2f doSATCollision(CollidingGameEntity movingE, CollidingGameEntity staticE) {
 
 		float overlap = Float.MAX_VALUE;
-		
-		for (int poly = 0; poly < 2; poly++) { // checking one against the other
-			
+					
 			for (int i = 0; i < staticE.shape.size(); i++) {
 				Vector2f a = staticE.shape.get(i);
 				Vector2f b = staticE.shape.get((i + 1) % staticE.shape.size());
 				Vector2f edge = new Vector2f(b.x-a.x, b.y-a.y);
 				
 				Vector2f normal;
-				if (poly == 1) {
-					normal = new Vector2f((edge.y),-(edge.x));
-				} else {
-					normal = new Vector2f(-(edge.y),(edge.x));
-				}
+				normal = new Vector2f((edge.y),-(edge.x));
+				//normal = new Vector2f(-(edge.y),(edge.x));
 				
 				normal.normalise();
 				
@@ -58,13 +53,14 @@ public class CollisionHandler {
 				} 
 				
 			}
-		}
-		Vector2f d = new Vector2f(staticE.pos.x - movingE.pos.x, staticE.pos.y - movingE.pos.y); //minimalTranslationVector
-		float s = d.length();
+
+			Vector2f d = new Vector2f(staticE.pos.x - movingE.pos.x, staticE.pos.y - movingE.pos.y); //minimalTranslationVector
+			float s = d.length();
+			
+			Vector2f move = new Vector2f(-overlap * d.x / s, -overlap * d.y / s); //block
+			
+			return move;
 		
-		Vector2f move = new Vector2f(-overlap * d.x / s, -overlap * d.y / s); //block
-		
-		return move;
 	}
 	
 	public static boolean detectSATCollision(CollidingGameEntity movingE, CollidingGameEntity staticE) {
@@ -76,8 +72,13 @@ public class CollisionHandler {
 	
 	public static void resolveSATCollision(CollidingGameEntity movingE, CollidingGameEntity staticE) {
 		Vector2f move = doSATCollision(movingE, staticE);
+		Vector2f move1 = doSATCollision(staticE, movingE);
 		if(move != null){
-			movingE.move(move);
+			if(move1.length()<move.length()){
+				movingE.move(move1);
+			} else {
+				movingE.move(move);	
+			}
 		}
 	}
 	

@@ -10,6 +10,7 @@ import org.lwjgl.util.vector.Vector2f;
 
 import entities.CollidingGameEntity;
 import entities.Player;
+import util.Line;
 import util.PolygonEditor;
 import util.RectEditor;
 import util.WorldLoader;
@@ -48,7 +49,7 @@ public class Main {
 		    Display.update();
 		}
 		
-			currentWorld.saveWorld("res", currentWorldNumber);
+			currentWorld.saveWorld("../Arcade2/res/worlds/world", currentWorldNumber);
 		
 		Display.destroy();
 	}
@@ -63,9 +64,11 @@ public class Main {
 	static Camera camera;
 	private static void init() {
 		camera = new Camera(new Vector2f(0,0), 1);
-		currentWorld = WorldLoader.loadWorld(currentWorldNumber);
+		currentWorld = WorldLoader.loadWorld("../Arcade2/res/worlds/world", currentWorldNumber);
 		
-		currentWorld.polygons.get(activeColliderIndex).isActive = true;
+		if(currentWorld.polygons.size()!=0){
+			currentWorld.polygons.get(activeColliderIndex).isActive = true;
+		}
 	}
 	
 	public static int activeColliderIndex = 0;
@@ -88,7 +91,7 @@ public class Main {
 	
 	private static void changeWorld(int worldNumber){
 		currentWorldNumber = worldNumber;
-		currentWorld = WorldLoader.loadWorld(currentWorldNumber);
+		currentWorld = WorldLoader.loadWorld("../Arcade2/res/worlds/world", currentWorldNumber);
 	}
 	
 	private static void render() {
@@ -96,6 +99,9 @@ public class Main {
 		GL11.glTranslatef(-camera.pos.x, -camera.pos.y, 0);
 		
 		currentWorld.render();
+
+		new Line(new Vector2f(0,0), new Vector2f(0,1000)).render();
+		new Line(new Vector2f(0,0), new Vector2f(1000,0)).render();
 		
 		GL11.glPopMatrix();
 		//CollisionHandler.currentLine.render();
@@ -120,30 +126,27 @@ public class Main {
 					Main.changeWorld(currentWorldNumber + 1);
 				}
 			}
+			if(Keyboard.getEventKey() == Keyboard.KEY_N){
+				if(Keyboard.getEventKeyState()){
+					currentWorld.createNewPolygon();
+					currentWorld.createNewGraphicRect();
+					if(editMode) currentWorld.changeActivePolygonToLast();
+					else currentWorld.changeActiveRectToLast();
+				}
+			}
 			if(editMode){
-				if(Keyboard.getEventKey() == Keyboard.KEY_N){
-					if(Keyboard.getEventKeyState()){
-						currentWorld.createNewPolygon();
-						currentWorld.changeActivePolygonToLast();
-					}
-				}else if(Keyboard.getEventKey() == Keyboard.KEY_TAB){
+				if(Keyboard.getEventKey() == Keyboard.KEY_TAB){
 					if(Keyboard.getEventKeyState()){
 						currentWorld.changeActivePolygon();
 					}
 				}
 			} else {
-				if(Keyboard.getEventKey() == Keyboard.KEY_N){
-					if(Keyboard.getEventKeyState()){
-						currentWorld.createNewGraphicRect();
-						currentWorld.changeActiveRectToLast();
-					}
-				}else if(Keyboard.getEventKey() == Keyboard.KEY_TAB){
+				} if(Keyboard.getEventKey() == Keyboard.KEY_TAB){
 					if(Keyboard.getEventKeyState()){
 						currentWorld.changeActiveRect();
 					}
 				}
 			}
-		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)){
 			if(Mouse.isButtonDown(1)){
 				camera.pos.x -= Mouse.getDX();
