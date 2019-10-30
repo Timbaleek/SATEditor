@@ -1,5 +1,6 @@
 package util;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
 
@@ -28,17 +29,33 @@ public class RectEditor {
 				}
 			}else{
 				Vector2f mouseMove = new Vector2f(Mouse.getDX(),Mouse.getDY());
-				if(corner==0){
-					r.size.x-=mouseMove.x; r.size.y+=mouseMove.y;
-					r.pos.x+=mouseMove.x; r.pos.y-=mouseMove.y;
-				}else if(corner==1){
-					r.size.x+=mouseMove.x; r.size.y+=mouseMove.y;
-					r.pos.y-=mouseMove.y;
-				}else if(corner==2){
-					r.size.x+=mouseMove.x; r.size.y-=mouseMove.y;
-				}else if(corner==3){
-					r.size.x-=mouseMove.x; r.size.y-=mouseMove.y;
-					r.pos.x+=mouseMove.x;
+				if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)){
+					float sizeRelation = r.size.y / r.size.x;
+					if(corner==0){
+						r.size.x-=mouseMove.x; r.size.y+=mouseMove.x*-sizeRelation;
+						r.pos.x+=mouseMove.x; r.pos.y-=mouseMove.x*-sizeRelation;
+					}else if(corner==1){
+						r.size.x+=mouseMove.x; r.size.y+=mouseMove.x*sizeRelation;
+						r.pos.y-=mouseMove.x*sizeRelation;
+					}else if(corner==2){
+						r.size.x+=mouseMove.x; r.size.y-=mouseMove.x*-sizeRelation;
+					}else if(corner==3){
+						r.size.x-=mouseMove.x; r.size.y-=mouseMove.x*sizeRelation;
+						r.pos.x+=mouseMove.x;
+					}
+				} else {
+					if(corner==0){
+						r.size.x-=mouseMove.x; r.size.y+=mouseMove.y;
+						r.pos.x+=mouseMove.x; r.pos.y-=mouseMove.y;
+					}else if(corner==1){
+						r.size.x+=mouseMove.x; r.size.y+=mouseMove.y;
+						r.pos.y-=mouseMove.y;
+					}else if(corner==2){
+						r.size.x+=mouseMove.x; r.size.y-=mouseMove.y;
+					}else if(corner==3){
+						r.size.x-=mouseMove.x; r.size.y-=mouseMove.y;
+						r.pos.x+=mouseMove.x;
+					}
 				}
 			}
 		} else {

@@ -15,7 +15,7 @@ public class PolygonLoader {
 		Vector2f pos = null;
 		ArrayList<Vector2f> points = new ArrayList<>();
 		boolean firstLine = true;
-		
+
 		Scanner scanner = null;
 		try {
 			scanner = new Scanner(new File(path));
@@ -25,18 +25,18 @@ public class PolygonLoader {
 		System.out.println("Reading Collider: " + path.substring(path.lastIndexOf("/")));
 		//read line by line
 		while(scanner.hasNextLine()){
-		    //process each line
-		    String line = scanner.nextLine();
-		    String[]object = line.split(",");
-		    if(firstLine){
-		    	pos = new Vector2f(Float.parseFloat(object[0]),Float.parseFloat(object[1]));
-		    	firstLine = false;
-		    } else {
-		    	points.add(new Vector2f(Float.parseFloat(object[0]),Float.parseFloat(object[1])));
-		    }
+			//process each line
+			String line = scanner.nextLine();
+			String[]object = line.split(",");
+			if(firstLine){
+				pos = new Vector2f(Float.parseFloat(object[0]),Float.parseFloat(object[1]));
+				firstLine = false;
+			} else {
+				points.add(new Vector2f(Float.parseFloat(object[0]),Float.parseFloat(object[1])));
+			}
 		}
-		System.out.println(points);
+		//System.out.println(points);
 		return new Polygon(pos, points);
 	}
-	
+
 }

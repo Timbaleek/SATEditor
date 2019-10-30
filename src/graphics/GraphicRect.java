@@ -54,7 +54,8 @@ public class GraphicRect {
 			Writer wr = new FileWriter(path + rectNumber +".txt");
 			wr.write(pos.x+","+pos.y+",");
 			wr.write(size.x+","+size.y+",");
-			wr.write(textureName);
+			wr.write(textureName+",");
+			wr.write("1");
 			wr.flush();
 			wr.close();
 		} catch (IOException e) {

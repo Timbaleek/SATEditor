@@ -15,7 +15,7 @@ public class GraphicRectLoader {
 	protected static Texture initTex(String textureName){
 		Texture tex = null;
 		//path = path.replace("rects", "textures").substring(path.lastIndexOf("."))+".png";
-		String path = "res/textures/"+textureName+".png";
+		String path = "/../Arcade2/res/textures/"+textureName+".png";
 		try {
 			tex = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(path));
 			tex.setTextureFilter(GL11.GL_NEAREST);

@@ -57,7 +57,7 @@ public class Main {
 	public static float transparency = 0.5f;
 	public static CollidingGameEntity g;
 	public static Player p;
-	static final int numberOfWorlds = 1;
+	static final int numberOfWorlds = 9;
 	public static World currentWorld;
 	public static int currentWorldNumber = 0;
 	
@@ -121,9 +121,17 @@ public class Main {
 					}
 					editMode = !editMode;
 				}
-			} else if(Keyboard.getEventKey() == Keyboard.KEY_1){
+			} else if(Keyboard.getEventKey() == Keyboard.KEY_PERIOD){
 				if(Keyboard.getEventKeyState()){//pressed
-					Main.changeWorld(currentWorldNumber + 1);
+					if(currentWorldNumber < numberOfWorlds){
+						Main.changeWorld(currentWorldNumber + 1);
+					}
+				}
+			} else if(Keyboard.getEventKey() == Keyboard.KEY_MINUS){
+				if(Keyboard.getEventKeyState()){//pressed
+					if(currentWorldNumber > 0){
+						Main.changeWorld(currentWorldNumber - 1);
+					}
 				}
 			}
 			if(Keyboard.getEventKey() == Keyboard.KEY_N){
@@ -147,7 +155,7 @@ public class Main {
 					}
 				}
 			}
-		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)){
+		if(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)){
 			if(Mouse.isButtonDown(1)){
 				camera.pos.x -= Mouse.getDX();
 				camera.pos.y += Mouse.getDY();
